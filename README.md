@@ -1,4 +1,7 @@
 # solarHomeEnergyAnalytics
+
+LinkedIn article: https://www.linkedin.com/pulse/solar-energy-usage-forecast-analytics-gautam-makani/ 
+
 Analytics for the home
 
 
