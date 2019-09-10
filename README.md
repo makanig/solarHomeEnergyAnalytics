@@ -2,6 +2,8 @@
 
 LinkedIn article: https://www.linkedin.com/pulse/solar-energy-usage-forecast-analytics-gautam-makani/ 
 
+Medium article: https://medium.com/@gautam.makani/nem-policy-and-home-solar-and-energy-analytics-c6336a8477f5
+
 Analytics for the home
 
 
