@@ -113,6 +113,8 @@ knitr::include_graphics(paste(image_path ,"/LearningRPicture.png", sep = ""))
 * Statistical programming language
 * Over 15000 packages - one of the most famous is [Tidyverse](https://www.tidyverse.org)
 * Recommended online text: [R for Data Science  by Hadley Wickham and Garrett Grolemund](https://r4ds.had.co.nz/)
+* [Rob J Hyndman blog](https://robjhyndman.com/hyndsight/) and [book on forecasting](https://otexts.com/fpp2/) 
+* [StackOverflow](https://stackoverflow.com/questions/tagged/r) & [StackExchange](https://datascience.stackexchange.com/) 
 * Credits to Bay Area useR Group - [Time Series Workshop](https://github.com/RamiKrispin/Time-Series-Workshop) by 
 Rami Krispin (@Rami_Krispin), Danton Noriega (@dantonnoriega)
 * For a gentle (1-2 hour) introduction to R - [Swirl](https://swirlstats.com/students.html)
@@ -218,6 +220,16 @@ With time series analysis, you can answer questions such as:
 * **Generally**, what will be the demand for electricity in the UK during the next 24 hours?
 
 ## Solar Generation Forecast Analysis
+
+### What is Solar Net Energy Metering (NEM)
+```{r echo=FALSE, out.width="850px"}
+knitr::include_graphics(paste(image_path ,"/SolarNEM.png", sep = ""))
+```
+
+### What can you expect from your online PG&E Analytics
+```{r echo=FALSE, out.width="850px"}
+knitr::include_graphics(paste(image_path ,"/PGE_OnlineAnalytics.png", sep = ""))
+```
 
 ### Solar Forecast Analysis workflow
 This builds on what you saw in the previous Time Series Analysis workflow slide with model comparison and financial sensitivity analysis
