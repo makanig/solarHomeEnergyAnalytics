@@ -35,7 +35,7 @@ dataDir = "data"
 gasSkipLines = 5
 electricSkipLines = 5
 
-useRDSFiles = F # use saved RDSFiles
+useRDSFiles = T # use saved RDSFiles
 
 gasUsageDaily = "pge_gas_interval_data.csv"
 solarProductionDaily = "Enphase_system_energy_20150708_to_20190808.csv"
