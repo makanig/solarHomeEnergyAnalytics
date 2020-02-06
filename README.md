@@ -6,10 +6,15 @@ Medium article: https://medium.com/@gautam.makani/nem-policy-and-home-solar-and-
 
 Analytics for the home
 
+# Presented to Bay Area R users group - Dec 9. 2018
 
-To run the program:
+# For Tech Thursdays meetup - Feb 6, 2020
 
+To run the analysis:
 installCorePackages run only the first time
-edit the main program to put in your Plotly key and the correct data directory
 
-Run through the main program sequentially
+Run the Rmd notebook to generate the HTML content and Plotly charts
+
+Or use config.R to run the standalong program
+
+
