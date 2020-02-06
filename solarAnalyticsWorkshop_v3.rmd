@@ -1,0 +1,292 @@
+---
+title: "Analytics and Forecasting with R"
+author: "Gautam Makani, Senior Business Solutions Leader, Altimetrik (https://www.linkedin.com/in/gautammakani/)"
+date: "`r format(as.Date('2020-02-06'), '%b %d, %Y')`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    standalone: true
+subtitle: ''
+editor_options:
+  chunk_output_type: inline
+---
+
+<style type="text/css">
+
+body{ /* Normal  */
+      font-size: 20px;
+  }
+td {  /* Table  */
+  font-size: 16px;
+}
+h1.title {
+  font-size: 38px;
+  color: Black;
+}
+h1 { /* Header 1 */
+  font-size: 28px;
+  color: #468cc8;
+}
+h2 { /* Header 2 */
+    font-size: 30px;
+  color: #468cc8;
+}
+h3 { /* Header 3 */
+  font-size: 25px;
+  color: #468cc8;
+}
+
+h4 { /* Header 4 */
+  font-size: 20px;
+  color: #81A4BE;
+}
+
+h5 { /* Header 4 */
+  color: #81A4BE;
+}
+
+
+
+d-code { /* Code block */
+    background-color: #f9f9f9;
+}
+
+code { /* Code block */
+    font-size: 16px;
+    color: #cc8c8c;
+    font-family: "Courier";
+}
+pre.text-output { /* Code block - determines code spacing between lines */
+    font-size: 14px;
+    background-color: #ecf6ff;
+}
+</style>
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width=9, fig.height=5, warning=FALSE, message=FALSE)
+library(TSstudio)
+library(UKgrid)
+image_path <- paste(rprojroot::find_rstudio_root_file(), "/images", sep = "")
+```
+
+```{r, include=FALSE}
+knitr::read_chunk('config.R')
+```
+
+## Workshop Agenda
+
+* Introduction to R 
+* Solar production -Analysis approach, packages and environment
+* Exploratory analysis and Data Cleansing 
+* Build and compare 3 solar generation models: [ARIMA](https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average) & 2 [Generalized Linear Models](https://en.wikipedia.org/wiki/Generalized_linear_model) 
+* Forecast Generation using [ARIMA](https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average)
+* Show me the $$ - sensitivity analysis of savings, [ROI](https://en.wikipedia.org/wiki/Return_on_investment), [IRR](https://en.wikipedia.org/wiki/Internal_rate_of_return)
+
+
+
+### Quick survey
+
+* Used R?
+* Feel comfortable with linear regression?
+* Familiar with the forecast package?
+* Used ggplot2 or plotly?
+
+
+### Assumptions
+
+* Some background in R
+* Basic knowledge in probability
+* Familiar with linear regression 
+
+### Quick R intro
+
+```{r echo=FALSE, out.width="650px"}
+knitr::include_graphics(paste(image_path ,"/LearningRPicture.png", sep = ""))
+```
+
+
+* Open source and free
+* Statistical programming language
+* Over 15000 packages - one of the most famous is [Tidyverse](https://www.tidyverse.org)
+* Recommended online text: [R for Data Science  by Hadley Wickham and Garrett Grolemund](https://r4ds.had.co.nz/)
+* Credits to Bay Area useR Group - [Time Series Workshop](https://github.com/RamiKrispin/Time-Series-Workshop) by 
+Rami Krispin (@Rami_Krispin), Danton Noriega (@dantonnoriega)
+* For a gentle (1-2 hour) introduction to R - [Swirl](https://swirlstats.com/students.html)
+
+```{r eval=FALSE}
+install.packages("swirl")
+library("swirl")
+#swirl()
+```
+
+### Goals
+By the end of this workshop, you won't become an expert in time series analysis and forecasting, but you will (hopefully) be:
+
+* More interested in exploring Data Science with R
+* Feel excited about applying R/Plotly/Tidyverse for analysis in your work
+* Know what it takes to build a basic time series forecasting model
+* Read my [LinkedIn article](https://www.linkedin.com/pulse/solar-energy-usage-forecast-analytics-gautam-makani/)
+
+
+
+
+
+
+
+### Admin
+
+#### Workshop material
+
+All today's slides, code, and rmarkdown files are available on [GitHub](https://github.com/makanig/solarHomeEnergyAnalytics)
+
+Downloading the workshop material from the terminal:
+
+```{bash, eval=FALSE}
+git clone https://github.com/makanig/solarHomeEnergyAnalytics.git
+```
+
+```{r echo=FALSE,first_config_chunk}
+```
+
+
+
+
+## Introduction to time series analysis
+
+Time series analysis is commonly used in many fields of science, such as economics, finance, physics, engineering, and astronomy.  The usage of time series analysis to understand past events and to predict future ones did not start with the introduction of the stochastic process during the past century. Ancient civilizations such as the Greeks, Romans, or Mayans, researched and learned how to utilize cycled events such as weather and astronomy to predict future events. 
+
+
+**Time series analysis** - is the art of extracting meaningful insights from time-series data to learn about past events and to predict future events. 
+
+This process includes the following steps:
+
+* **Data collection** - pulling the raw data from a database, API, flat files etc.
+* **Data prep** - cleaning, reformating (dates, classes, etc.), aggregating
+* **Descriptive analysis** - using statistical methods and data visualization tools to extract insights and learn about the series components and patterns
+* **Predictive analysis** - leveraging the insights learned in the descriptive process and apply some predictive model 
+
+### Typical Time series in R
+A typical analysis in R process will look like this (picture credit:Rami & Danton):
+
+```{r echo=FALSE, out.width="850px"}
+knitr::include_graphics(paste(image_path ,"/Time Series Analysis Workflow.png", sep = ""))
+```
+
+### Time series objects
+
+There are multiple classes in R for time-series data, the most common types are:
+
+* The `ts` class for regular time-series data, and `mts` class for multiple time seires objects , the most common class for time series data
+* The `xts` and `zoo` classes for both regular and irregular time series data, mainly popular in the financial field
+* The `tsibble` class, a tidy format for time series data, support both regular and irregular time-series data
+
+
+
+
+
+### The TSstudio package
+
+The [TSstudio](https://github.com/RamiKrispin/TSstudio) package provides a set of functions for time series analysis. That includes interactive data visualization tools based on the [plotly](https://plot.ly/r/) package engine, supporting multiple time series objects such as `ts`, `xts`, and `zoo`. The following diagram demonstrates the workflow of the **TSstudio** package:
+
+
+```{r echo=FALSE, out.width="850px"}
+knitr::include_graphics(paste(image_path ,"/TSstudio Structure.png", sep = ""))
+```
+
+
+### Time series data
+
+**Time series data** - is a sequence of values, each associate to a unique point in time that can divide to the following two groups:
+
+* **Regular time series** - is a sequence of observations which were captured at equally spaced time intervals (e.g., every month, week, day, hour, etc.)
+* **Irregular time series** - or unevenly spaced time series, is a sequence of observations which were not captured on equally spaced time intervals (for example rainy days, earthquakes, clinical trials, etc.)
+
+
+
+**Note:** typically, the term time series data referred to regular time-series data. Therefore, if not stated otherwise, throughout the workshop the term time series (or series) refer to regular time-series data
+
+### Applications
+
+With time series analysis, you can answer questions such as:
+
+* How many vehicles, **approximately**, going to be sold in the US in the next 12 months?
+* What will be the **estimated** demand for natural gas in the US in the next five years?
+* **Generally**, what will be the demand for electricity in the UK during the next 24 hours?
+
+## Solar Generation Forecast Analysis
+
+### Solar Forecast Analysis workflow
+This builds on what you saw in the previous Time Series Analysis workflow slide with model comparison and financial sensitivity analysis
+
+```{r echo=FALSE, out.width="850px"}
+knitr::include_graphics(paste(image_path ,"/AnalysisWorkflow.png", sep = ""))
+```
+
+### Our solar generation is an examples of time series data
+
+```{r second_config_chunk}
+```
+
+### Every Data Science project needs to fix missing/bad data
+
+* Let's review the code and algorithm that's going into imputing missing/wrong values
+```{r third_config_chunk}
+```
+
+
+### ARIMA parameter analysis
+
+* We will skip this (refer to Rami Krispin's workshop for further details)
+* These plots are used to arrive at the ARIMA (2,1,1)(0,1,0) parameters
+```{r fourth_config_chunk}
+```
+
+
+
+### GLM models & Training & Test sets
+
+```{r fifth_config_chunk}
+```
+
+
+
+### Decomposition of GLM model into constituents
+
+* This type of analysis is used in [SalesForce Einstein](https://www.salesforce.com/products/einstein/overview/) and similar tools
+* Understand the underlying factors for variance so you can act on it
+
+
+```{r sixth_config_chunk}
+```
+
+### Compare models using training and test sets
+
+
+```{r seventh_config_chunk}
+```
+
+### 25 year ARIMA forecast
+
+
+```{r eighth_config_chunk}
+```
+
+
+## Financial analysis 
+
+### ROI & IRR
+
+* How do you compare differing investment returns ?
+
+```{r ninth_config_chunk}
+```
+
+### Summary of Generation, Usage and NEM
+
+```{r tenth_config_chunk}
+```
+
