@@ -1575,7 +1575,7 @@ subplot(g1,g2,g3,nrows=3, titleY = TRUE)
 #                 marker = list(color = '#e60926', symbol="diamond"),
 #                 #line = list(shape="spline", dash="dash", color = "#e60926"),
 #                 hoverinfo = "text",
-#                 text = ~paste(TMAX, "캟", DATE)) %>%
+#                 text = ~paste(TMAX, "째F", DATE)) %>%
 #       layout(title = "Solar generation, Energy Usage and Weather",
 #              xaxis = list(title = ""),
 #              yaxis = list(side = "left",  title = "Energy in Kwh", 
@@ -1604,7 +1604,7 @@ subplot(g1,g2,g3,nrows=3, titleY = TRUE)
 #                 name = "Loess Smoother",
 #                 hoverinfo = "text",
 #                 yaxis = "y2",
-#                 text = ~paste(TMAX, '캟', DATE)) %>%
+#                 text = ~paste(TMAX, '째F', DATE)) %>%
 #       # 
 #       # 
 #       # 
@@ -1614,7 +1614,7 @@ subplot(g1,g2,g3,nrows=3, titleY = TRUE)
 #       #           marker = list(color = '#e60926', symbol="diamond"),
 #       #           #line = list(shape="spline", dash="dash", color = "#e60926"),
 #       #           hoverinfo = "text",
-#       #           text = ~paste(TMAX, "캟", DATE)) %>%
+#       #           text = ~paste(TMAX, "째F", DATE)) %>%
 #       layout(title = "Solar generation, Energy Usage and Weather",
 #              xaxis = list(title = ""),
 #              yaxis = list(side = "left",  title = "Energy in Kwh", 
@@ -1776,12 +1776,12 @@ plot_ly(gasDfMonthlyAndWeather) %>%
   # add_trace(x = ~DATE, y = ~TEMP, type = 'scatter', mode = 'markers', name = 'Temperature', yaxis = 'y2',
   #           marker = list(color = '#45171D'),
   #           hoverinfo = "none",
-  #           text = ~paste(TMIN, '캟', DATE)) %>%
+  #           text = ~paste(TMIN, '째F', DATE)) %>%
   add_lines(x = ~DATE, y = ~fitted(loess(TMIN ~ as.numeric(DATE), span=0.01)),
             line = list(color = 'rgba(7, 164, 181, 1)'),
             name = "Daily minimum temperature",
             hoverinfo = "text",
-            text = ~paste(TMIN, '캟', DATE)) %>%
+            text = ~paste(TMIN, '째F', DATE)) %>%
   layout(title = "Monthly gas usage vs minimum daily temperature",
          xaxis = list(title = ""),
          yaxis = list(side = "left",  title = 'Therms', 
