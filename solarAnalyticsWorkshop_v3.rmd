@@ -1,6 +1,6 @@
 ---
 title: "Analytics and Forecasting with R"
-author: "Gautam Makani, Senior Business Solutions Leader, Altimetrik (https://www.linkedin.com/in/gautammakani/)"
+author: "[Gautam Makani](https://www.linkedin.com/in/gautammakani/), Senior Business Solutions Leader, [Altimetrik](https://www.altimetrik.com/)"
 date: "`r format(as.Date('2020-02-06'), '%b %d, %Y')`"
 output: 
   html_document:
@@ -85,6 +85,25 @@ knitr::read_chunk('config.R')
 * Build and compare 3 solar generation models: [ARIMA](https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average) & 2 [Generalized Linear Models](https://en.wikipedia.org/wiki/Generalized_linear_model) 
 * Forecast Generation using [ARIMA](https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average)
 * Show me the $$ - sensitivity analysis of savings, [ROI](https://en.wikipedia.org/wiki/Return_on_investment), [IRR](https://en.wikipedia.org/wiki/Internal_rate_of_return)
+
+### Before we start - Install RStudio and R
+
+* Windows R: https://cran.r-project.org/bin/windows/base/
+* Windows RStudio:https://rstudio.com/products/rstudio/download/
+
+
+* For Mac:
+*	Open an internet browser and go to https://www.r-project.org
+*	Click the "download R" link in the middle of the page under "Getting Started."
+*	Select a CRAN location (a mirror site) and click the corresponding link.
+*	Click on the "Download R for (Mac) OS X" link at the top of the page.
+*	Click on the file containing the latest version of R under "Files."
+*	Save the .pkg file, double-click it to open, and follow the installation instructions.
+*	Now that R is installed, you need to download and install RStudio
+
+*	Go to www.rstudio.com and click on the "Download RStudio" button.
+*	Click on "Download RStudio Desktop."
+* Click on the version recommended for your system, or the latest Mac version, save the .dmg file on your computer, double-click it to open, and then drag and drop it to your applications folder.
 
 
 
