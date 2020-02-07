@@ -16,18 +16,12 @@ library(imputeTS)
 library(geosphere)
 library(ggcorrplot)
 library(swirl)
-
 library(FinCal)
-
 library(tidyr)
 library(TSstudio)
 
-library(TSstudio)
-library(forecastML)
 nest <- nest_legacy
 unnest <- unnest_legacy
-
-
 
 
 #dataDir = "C:/Users/gauta/repos/solarHomeEnergyAnalytics/data2"
@@ -104,7 +98,7 @@ getRawSolarDf <- function() {
   # skip the total row
   solarDf = solarDf %>% mutate(DATE = as.Date(DATE,"%Y-%m-%d")) %>% # %>% filter(DATE <= lastSolarReading) %>%
     na.omit()
-  solarDf = addMissingTimeValues(solarDf, "DATE", "energyProducedWh") 
+  #solarDf = addMissingTimeValues(solarDf, "DATE", "energyProducedWh") 
   
 }
 
@@ -381,7 +375,12 @@ predictMonthlyGen <- function(costDf, genMonthlyDf) {
 ## Check raw data - exploratory analysis
 setwd(dataDir)
 
-solarDf = getRawSolarDf()
+# get   generation
+solarDf = tbl_df(read.csv(solarProductionDaily,  stringsAsFactors = F))
+colnames(solarDf) <- c("DATE", "energyProducedWh")
+
+# skip the total row
+solarDf = solarDf %>% mutate(DATE = as.Date(DATE,"%Y-%m-%d")) %>%   na.omit()
 
 solarDfTsibble = solarDf %>% select(DATE, energyProducedWh) %>% as_tsibble()
 ts_plot(solarDfTsibble, 
